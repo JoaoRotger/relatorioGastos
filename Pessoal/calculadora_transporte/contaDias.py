@@ -1,4 +1,5 @@
-from datetime import datetime, timedelta
+import datetime
+from datetime import timedelta
 
 def getDate():
     dataAgora = datetime.datetime.now()
@@ -35,7 +36,8 @@ def dias_do_mes():
     dias = []
     dia_atual = primeiro_dia
     while dia_atual <= ultimo_dia:
-        dias.append(dia_atual.strftime('%d/%m/%Y'))
+        if dia_atual.weekday() < 5:  # Verifica se não é sábado (5) ou domingo (6)
+            dias.append(dia_atual.strftime('%d/%m/%Y'))
         dia_atual += timedelta(days=1)
     
     return dias

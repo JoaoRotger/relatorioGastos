@@ -1,38 +1,16 @@
-from math import ceil
-import contaDias
-import calendar
-import openpyxl as xl
-from openpyxl.utils import get_column_letter
+import pandas as pd
+import contaDias as cd
 
-dataAtual = contaDias.getDate()
-quntDias = contaDias.quantDias(dataAtual[1], dataAtual[2])
-month = calendar.month(dataAtual[2], dataAtual[1])
+# Obtém os dias do mês
+data = cd.getDate()
+dias_do_mes = cd.dias_do_mes()
 
-def dinheiroGasto():
-    passagem = 4.40
-    total = quntDias * passagem
-    total = ceil(total)
-    return total
+# Criação do DataFrame
+tabela = pd.DataFrame({'Data': dias_do_mes, 'Motivo': 'Transporte Ida e Volta', 'Valor': 8.80})
+tabela = tabela[['Data', 'Motivo', 'Valor']]
+tabela = tabela.reset_index(drop=True)
 
-total = dinheiroGasto()
-mes = contaDias.getMonthStr()
-dias_do_mes = contaDias.dias_do_mes()
+# Imprime o DataFrame
+print(tabela)
 
-planilha = xl.Workbook()
-
-# Seleciona a active Sheet
-ws1 = planilha.active
-# Rename it
-ws1.title = f'{mes}_{dataAtual[2]}'
-
-# Escreve alguns dados
-for col in range(1,5):
-    for row in range(dias_do_mes.__len__):
-        letter = get_column_letter(col)
-        ws1[letter + str(row)] = letter + str(row)
-
-# Cria nova sheet
-ws2 = planilha.create_sheet(title="Ok")
-ws2["C1"] = "OK"# Salva arquivo (Se não colocar o caminho complete, ele salva
-# na mesma pasta do scritp.
-planilha.save(f'Relatorio_de_Gastos_{mes}_{dataAtual[2]}.xlsx')
+tabela.to_excel(f'Relatorio_de_Gastos_{data[1]}{data[2]}.xlsx', sheet_name=f'{data[1]}{data[2]}')
