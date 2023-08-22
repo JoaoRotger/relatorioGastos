@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timedelta
 
 def getDate():
     dataAgora = datetime.datetime.now()
@@ -10,19 +10,39 @@ def getDate():
 def getMonthStr():
     month = getDate()
     return {
-        'Janeiro'   : 1,
-        'Fevereiro' : 2,
-        'Março'     : 3,
-        'Abril'     : 4,
-        'Maio'      : 5,
-        'Junho'     : 6,
-        'Julho'     : 7,
-        'Agosto'    : 8,
-        'Setembro'  : 9,
-        'Outubro'   : 10,
-        'Novembro'  : 11,
-        'Dezembro'  : 12
+        1 : 'Janeiro',
+        2 : 'Fevereiro',
+        3 : 'Março',
+        4 : 'Abril',
+        5 : 'Maio',
+        6 : 'Junho',
+        7 : 'Julho',
+        8 : 'Agosto',
+        9 : 'Setembro',
+        10 : 'Outubro',
+        11 : 'Novembro',
+        12 : 'Dezembro'
     }.get(month[1])
+
+def dias_do_mes():
+    data = getDate()
+    ano = data[2]
+    mes = data[1]
+    primeiro_dia = datetime.datetime(ano, mes, 1)
+    proximo_mes = primeiro_dia.replace(day=28) + timedelta(days=4)
+    ultimo_dia = proximo_mes - timedelta(days=proximo_mes.day)
+    
+    dias = []
+    dia_atual = primeiro_dia
+    while dia_atual <= ultimo_dia:
+        dias.append(dia_atual.strftime('%d/%m/%Y'))
+        dia_atual += timedelta(days=1)
+    
+    return dias
+
+def obter_nome_dia_semana(numero_dia_semana):
+    nomes_dias = ["Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado", "Domingo"]
+    return nomes_dias[numero_dia_semana]
 
 def is_weekday(date):
     # Retorna True se a data é um dia útil (segunda a sexta-feira), False caso contrário
@@ -48,7 +68,3 @@ def quantDias(month, year):
         return weekdays_count
     else:
         print("Mês inválido. Digite um número entre 1 e 12.")
-
-
-mes = getMonthStr()
-print(mes)

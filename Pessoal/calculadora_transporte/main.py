@@ -15,17 +15,19 @@ def dinheiroGasto():
     return total
 
 total = dinheiroGasto()
+mes = contaDias.getMonthStr()
+dias_do_mes = contaDias.dias_do_mes()
 
 planilha = xl.Workbook()
 
 # Seleciona a active Sheet
 ws1 = planilha.active
 # Rename it
-ws1.title = 'my test'
+ws1.title = f'{mes}_{dataAtual[2]}'
 
 # Escreve alguns dados
 for col in range(1,5):
-    for row in range(1,6):
+    for row in range(dias_do_mes.__len__):
         letter = get_column_letter(col)
         ws1[letter + str(row)] = letter + str(row)
 
@@ -33,4 +35,4 @@ for col in range(1,5):
 ws2 = planilha.create_sheet(title="Ok")
 ws2["C1"] = "OK"# Salva arquivo (Se não colocar o caminho complete, ele salva
 # na mesma pasta do scritp.
-planilha.save('Text.xlsx')
+planilha.save(f'Relatorio_de_Gastos_{mes}_{dataAtual[2]}.xlsx')
