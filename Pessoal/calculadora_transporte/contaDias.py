@@ -36,7 +36,7 @@ def dias_do_mes():
     dias = []
     dia_atual = primeiro_dia
     while dia_atual <= ultimo_dia:
-        if dia_atual.weekday() < 5:  # Verifica se não é sábado (5) ou domingo (6)
+        if dia_atual.weekday() < 5:
             dias.append(dia_atual.strftime('%d/%m/%Y'))
         dia_atual += timedelta(days=1)
     
@@ -47,13 +47,11 @@ def obter_nome_dia_semana(numero_dia_semana):
     return nomes_dias[numero_dia_semana]
 
 def is_weekday(date):
-    # Retorna True se a data é um dia útil (segunda a sexta-feira), False caso contrário
     return date.weekday() < 5
 
 def count_weekdays_in_month(year, month):
-    # Retorna o número de dias úteis em um determinado mês
     first_day = datetime.date(year, month, 1)
-    last_day = datetime.date(year, month, 28) + datetime.timedelta(days=4)  # Adiciona 4 dias para garantir que inclua o último dia
+    last_day = datetime.date(year, month, 28) + datetime.timedelta(days=4)
     
     count = 0
     current_day = first_day
