@@ -22,7 +22,7 @@ tabela = tabela[['Data', 'Motivo', 'Valor']]
 tabela = tabela.reset_index(drop=True)
 
 # Adiciona uma linha extra ao DataFrame com o Valor Total
-valor_total = cd.quantDias(data[1], data[2]) * valorPassagem
+valor_total = cd.count_weekdays_in_month() * (valorPassagem * 2)
 linha_total = pd.DataFrame({'Data': 'Valor Total', 'Motivo': '', 'Valor': valor_total}, index=[-1])
 tabela = pd.concat([tabela, linha_total]).reset_index(drop=True)
 
@@ -48,3 +48,5 @@ sheet[f'D{len(tabela)+2}'].font = font_negrito
 workbook.save(nome_arquivo)
 
 print(f'Planilha "{nome_arquivo}" salva com sucesso!')
+
+print(cd.count_weekdays_in_month())

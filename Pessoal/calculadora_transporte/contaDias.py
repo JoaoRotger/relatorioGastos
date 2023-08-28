@@ -49,9 +49,12 @@ def obter_nome_dia_semana(numero_dia_semana):
 def is_weekday(date):
     return date.weekday() < 5
 
-def count_weekdays_in_month(year, month):
+def count_weekdays_in_month():
+    data = getDate()
+    month = data[1]
+    year =  data[2]
     first_day = datetime.date(year, month, 1)
-    last_day = datetime.date(year, month, 28) + datetime.timedelta(days=4)
+    last_day = datetime.date(year, month, 28) + datetime.timedelta(days=3)
     
     count = 0
     current_day = first_day
